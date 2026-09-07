@@ -1,6 +1,6 @@
 // Versioned, unit-explicit experiment data used by the UI, exports, and future analysis tools.
 export const DATA_VERSION=1;
-export const APP_VERSION='2.2.3';
+export const APP_VERSION='2.3.0';
 export const UNITS={length:'mm',force:'N',stress:'MPa',energy:'mJ',strain:'fraction',rotation:'rad',torque:'N mm',time:'wall-clock ms; not physical simulation time'};
 export const STEP_COLUMNS=['sequence','kind','status','converged','elapsedWallMs','strain','displacement','force','nominalStress','maxMemberStressMPa','p95MemberStressMPa','maxAxialStrain','minAxialStrain','maxAbsAxialStrain','meanAxialStrain','maxAbsTorqueNmm','storedEnergy','torsionEnergy','deletedElasticEnergy','plasticDissipation','broken','activeElements','loadPath','maxOutOfPlane','rotation','residual','iterations'];
 const measured=['strain','displacement','force','nominalStress','storedEnergy','torsionEnergy','deletedElasticEnergy','plasticDissipation','broken','residual','iterations','converged','rotation','loadPath','maxOutOfPlane'];

@@ -1,5 +1,6 @@
 // Deterministic planar and spatial cellular networks. All dimensions are mm.
 import {generateSpatialNetwork} from './geometry3d.js';
+export const MAX_HIERARCHY=5;
 export const DEFAULT_DESIGN = {
   dimension:'3d', family: 'cellular', columns: 1, rows: 1, slices:1, width: 36, height:36, depth:36, disorder: 0.35,
   hierarchy: 1, hierarchyScale: 0.46, radius: 0.58, fineRatio: 0.58,
@@ -20,7 +21,7 @@ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 export function sanitizeDesign(data={}) {
   const d={...DEFAULT_DESIGN,...data};
   d.dimension=d.dimension==='2d'?'2d':'3d';
-  const ranges={columns:d.dimension==='3d'?[1,4]:[3,9],rows:d.dimension==='3d'?[1,4]:[3,10],slices:[1,4],width:[20,160],height:[12,160],depth:[12,160],disorder:[0,1],hierarchy:[0,2],hierarchyScale:[0.28,0.65],radius:[0.25,1.8],fineRatio:[0.35,0.85],gradient:[-0.8,0.8],anisotropy:[0.5,1.8],repeatsX:[1,3],repeatsY:[1,3],repeatsZ:[1,3],seed:[1,999999],notchDepth:[0.05,0.55],notchY:[0.15,0.85],notchZ:[.1,1]};
+  const ranges={columns:d.dimension==='3d'?[1,4]:[3,9],rows:d.dimension==='3d'?[1,4]:[3,10],slices:[1,4],width:[20,160],height:[12,160],depth:[12,160],disorder:[0,1],hierarchy:[0,MAX_HIERARCHY],hierarchyScale:[0.28,0.65],radius:[0.25,1.8],fineRatio:[0.35,0.85],gradient:[-0.8,0.8],anisotropy:[0.5,1.8],repeatsX:[1,3],repeatsY:[1,3],repeatsZ:[1,3],seed:[1,999999],notchDepth:[0.05,0.55],notchY:[0.15,0.85],notchZ:[.1,1]};
   for(const [k,[lo,hi]] of Object.entries(ranges))d[k]=clamp(Number.isFinite(+d[k])?+d[k]:DEFAULT_DESIGN[k],lo,hi);
   for(const k of ['columns','rows','slices','hierarchy','repeatsX','repeatsY','repeatsZ','seed'])d[k]=Math.round(d[k]);
   if(!['cellular','honeycomb','branches','triangular','reentrant','diamond'].includes(d.family))d.family='cellular';

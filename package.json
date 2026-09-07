@@ -1,6 +1,6 @@
 {
   "name": "canopy-metamaterial-studio",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "private": true,
   "type": "module",
   "description": "Offline-capable hierarchical metamaterial design and beam mechanics studio",
