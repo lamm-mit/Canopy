@@ -162,22 +162,6 @@ Python packages are not required to launch the app.
 - [Changelog](CHANGELOG.md)
 - [Third-party notices](THIRD_PARTY.md)
 
-## Upload to GitHub
-
-Create an empty repository. Upload the **contents of the extracted `canopy-metamaterial-studio` folder**, so `README.md`, `package.json`, `dist/`, and `tests/` are at the repository root. Include the dotfiles and `.github/` directory. Do not upload the ZIP itself as the source tree.
-
-Use GitHub Desktop or Git. Replace `YOUR-ACCOUNT` with the repository owner before running the remote command:
-
-```bash
-git init -b main
-git add .
-git commit -m "Initial Canopy Metamaterial Studio source"
-git remote add origin https://github.com/YOUR-ACCOUNT/canopy-metamaterial-studio.git
-git push -u origin main
-```
-
-The included workflow runs checks on pushes and pull requests. The static serving directory is `dist/`; local operation needs no hosting provider.
-
 ## License
 
 Application code retains its [MIT license](LICENSE). Third-party components retain their licenses and source notices; see [THIRD_PARTY.md](THIRD_PARTY.md). The reference image remains subject to its existing rights and is not relicensed by the application license.
