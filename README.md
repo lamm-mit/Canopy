@@ -50,6 +50,9 @@ Both launchers bind to the local computer. Use the HTTP address above: directly 
 | Export | Design JSON, CSV, complete dataset ZIP import/export, replay files, PNG views, and silent H.264 MP4 |
 | Fabrication | Fused STL, round/square/reinforced-junction profiles, deformed export, adjustable mesh budgets, and adaptive simplification |
 
+<video src="assets/deformation.mp4" width="100%" controls>
+  Your browser does not support the video tag.
+</video>
 
 ### Start to experiment
 
