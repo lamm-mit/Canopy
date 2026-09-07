@@ -1,0 +1,2 @@
+import {exportDataset,importDataset} from './dataset-archive.js';
+self.onmessage=async({data})=>{try{if(data.type==='export'){const blob=await exportDataset(data.records,data.replays,progress=>postMessage({type:'progress',progress}));postMessage({type:'exported',blob});}else if(data.type==='import'){const result=importDataset(data.buffer,data.isJSON);postMessage({type:'imported',...result});}}catch(error){postMessage({type:'error',message:error.message||String(error)});}};

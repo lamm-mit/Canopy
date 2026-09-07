@@ -1,0 +1,53 @@
+# Using Canopy
+
+See the [README](../README.md) for local setup and the [methods](METHODS.md) for equations and model scope.
+
+## Explore a spatial unit cell
+
+1. Start with **Canopy**, **Crystal**, **Venation**, **Re-entrant**, **Mineral**, or **Wild growth**. The Structure panel also includes a diamond lattice. The default cell contains 96 nodes and 192 struts spanning all three dimensions.
+2. Vary cells along X/Y/Z, independent tile width/height/depth, disorder, hierarchy, fine-branch thickness, anisotropy, and spatial thickness gradients. XYZ repeats merge face nodes into a larger connected specimen. A seed reproduces the same organic realization.
+3. Rotate and zoom the specimen. Toggle **Cutaway** and move its slider to inspect the inner hierarchy. This clips only the view, so the full specimen still participates in mechanics and STL export.
+4. Choose linear elastic, Neo-Hookean axial, or elastoplastic axial material behavior. Spatial beams resist axial strain, bending in both transverse directions, and torsion. Poisson ratio controls elastic torsional stiffness; the incompressible axial option uses `G = E/3`.
+5. Select **Tension**, **Compress**, or **Shear**, choose the normal load axis, and, for shear, the perpendicular displacement direction. Start at the default 2% strain with small increments, then explore more extreme paths. **Pause**, **Reset**, and **Unload to zero** support inspection and plastic cycling.
+6. **Introduce a notch** cuts struts along a constant-Y rectangle entering from the left X face. Adjust its X depth, Y position, and Z span. A full Z span is a through-depth notch. Enable **Allow brittle failure** separately to simulate progressive strut deletion based on tensile principal stress including bending and torsion.
+7. Inspect reaction, energy, failed struts, maximum global Z displacement, torsional energy, residual, and stress/strain colors. **CSV** exports converged steps. **Save design** includes parameters, exact graph, state, and history. **Open** rebuilds a design for a fresh solve. The camera button exports the specimen view as PNG. Runs are also automatically collected under **Results**, including parameter snapshots, measurements, final attempted states, and replay geometry. **Reset** starts a new experiment while keeping earlier results.
+8. In **Print**, set nominal width, thickening, minimum diameter, profile, and grid resolution. Circular struts, reinforced junctions, and square struts produce different fused, closed STL versions of the complete XYZ material. Under **Adaptive simplification**, choose a remaining-triangle target, surface error target, curvature retention, and junction/tip protection. **Mesh budgets** controls the raw triangle and grid limits. The result reports original/final counts, error estimate, volume change, and topology.
+
+The reference button opens the supplied image and an editable interpretation note. That note is stored with the design; geometry comes from the visible controls. **2D planar network** mode and v1 design import remain available.
+
+## Replay, movies, and an experiment collection
+
+- **Displacement scale**, below the measurement tiles, exaggerates deformation from **1× to 100×**. Use the slider or enter a factor; **1× actual** restores physical deformation. This view setting stays across design changes, live experiments, and saved replays. The undeformed outline remains at its original position. **Fit specimen** frames the scaled geometry and all currently recorded poses; the camera stays steady during replay. Measurements, field colors, saved data, print preview, and STL geometry use physical deformation. PNGs and MP4s inherit the view factor and label any exaggeration.
+- **Run experiment** automatically records the initial state, converged equilibria, and discrete fracture events. **Unload to zero** appends to the same experiment, preserving hysteresis and plastic history. Changing design, material, mode, or solver resolution starts a new experiment; the old one stays in **Results**.
+- Under **Experiment replay**, click the green **Play replay** button, change speed, step backward/forward, or scrub to an exact state. During a run, **Pause to replay** pauses the solver and starts playback. You can orbit the saved geometry and change stress/strain colors. **Return to live** appears during replay of the current session and returns to the latest solver state. **Save replay / Open replay** preserve a standalone recording across sessions; saved replays offer **New experiment** to start a fresh solve using that design.
+- **Export MP4** offers 480p, 720p, or 1080p; 15, 24, or 30 fps; duration; optional measurement labels; and optional geometry smoothing. It uses a bundled H.264/WebAssembly encoder in a background worker. No FFmpeg, network upload, account, or codec installation is required. Exports use your current camera, field, and cutaway. Playback duration is presentation time, not physical time.
+- Open **Results** in the header to compare any selected experiments with stress–strain, force–strain, force–displacement, energy, damage, and plastic-dissipation curves. Summary scatter plots compare peak force/stress, rupture strains, stiffness, energy, and design/material parameters. Export the plot as **SVG**, or a **summary / measurement CSV**.
+- Select an experiment to name it, add research notes, review rich summary metrics and exact inputs, and **Open replay**. Rupture statistics distinguish first/last strut failure and loss of a spanning load path. An unobserved rupture is `null`, never a fabricated zero.
+- **Export data ZIP** exports all experiments by default (or a selected batch), with `dataset.json`, `summary.csv`, `measurements.csv`, `schema.json`, and all available binary replay files. **Import data** restores a Canopy data ZIP or its `dataset.json`. Merge skips existing IDs; “Keep imported copies” preserves a second version. JSON alone contains measurements, parameters, graph, and the final attempted state, but standalone replay geometry is in the ZIP.
+- **Results → Reset results → Clear experiments** clears the full saved collection and resets the current solver. This differs from the solver’s **Reset**, which preserves previous results.
+
+Results are saved in the current browser and origin using IndexedDB. Reopen the same `http://localhost:8080` address to see them. Different browsers, ports, and the hosted studio have separate stores; move the collection with **Export data ZIP / Import data**. Browser storage can be cleared or evicted, so export a backup for long-running research. If saving fails, the app explicitly reports session-only storage and keeps data available for export. Older app versions did not collect a persistent experiment history; rerun saved designs to populate this collection.
+
+To create sample data, run `node scripts/generate-research-examples.mjs` from the repository root, then import **`examples/research/Canopy_Example_Experiments.zip`** from Results. The script solves three 3D experiments: elastic tension, notched fracture, and a plastic loading/unloading cycle. It writes individual replays and an SVG comparison beside the ZIP. Generated recordings are omitted from this source distribution.
+
+Read **[EXPERIMENT_DATA.md](EXPERIMENT_DATA.md)** for data definitions, storage, and future research integration, and **[REPLAY.md](REPLAY.md)** for replay and movie behavior.
+
+## Physics and scope
+
+The 3D solver balances forces and moments using an objective director-beam energy, exact first derivatives, a sparse quasi-Newton solve, and an energy line search. Each node carries three translations and three rotations. Analytical checks cover `EAε` axial reaction, cantilever bending in both planes, and `TL/(GJ)` torsional rotation. The original release validation completed all six spatial example paths, including a notched fracture case with 20 failed struts. The generators can reproduce these examples locally.
+
+This is a reduced-order beam model. The nonlinear material options affect axial behavior; bending and torsion retain reference-section elasticity. Solid-junction stresses, self-contact, plastic bending/torsion, and calibrated crack energetics are outside its scope. It permits out-of-plane deformation but is not a global buckling/stability solver. Quasi-static animation represents progress toward equilibrium, not physical time. Material values are illustrative and need calibration for printed specimens.
+
+Only converged load steps enter the chart. A stalled step is flagged. Print thickening and square/reinforced profiles change geometry after the circular-section mechanics; these changes are not automatically included in the solved stiffness. Read **[METHODS.md](METHODS.md)** for equations, boundary conditions, residuals, failure criteria, and limitations.
+
+## Printing and practical limits
+
+- STL coordinates are mm. Nominal width scales centerlines; outside dimensions include added thickness.
+- The export grid must resolve the smallest diameter with at least 2.6 cells. Finer grids improve thin bridges and curved junctions. Keep the starting grid fine, then simplify redundant surface triangles. The default error target is 0.03 mm, capped at 10% of the smallest actual diameter; this is an approximate quadric error metric, not a certified maximum deviation.
+- Raw budgets default to 8 million triangles and 128 million grid samples, adjustable up to 16 million and 512 million. These are limits before simplification. Raise both when a fine volumetric mesh needs them. A selected limit is not a guarantee that every device has enough memory.
+- Export checks closed edges, orientation, and component count. Simplification also checks Euler characteristic, degenerate facets, and a maximum 1% total volume change, and falls back to the original surface if checks fail. Notches and fracture may create separate solids. Inspect the result in your slicer.
+- The 3D lattice repeats are part of the mechanics. The old print-layer control applies only to planar mode and is ignored for spatial designs.
+- The print preview uses analytic primitives; STL is their grid-sampled union. Square sections use a consistent per-strut orientation and extended ends to join at nodes.
+- Up to 64 boxes are allowed across XYZ cell/repeat counts. Large hierarchical systems solve more slowly. Use smaller specimens for exploration, then compare element subdivision and load-increment sensitivity.
+- WebGL2 enables the orbitable 3D view. A projected 2D canvas fallback keeps design and numerical experiments available if WebGL2 initialization fails; cutaway is a WebGL view feature.
+

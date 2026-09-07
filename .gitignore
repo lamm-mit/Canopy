@@ -1,0 +1,32 @@
+# Local tools and environments
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+.openai/
+artifacts/
+coverage/
+
+# Generated experiment, fabrication, and report outputs
+/examples/prints/
+/examples/research/
+/examples/legacy-planar/prints/
+/docs/results/
+/docs/legacy-planar/results/
+/docs/REPORT.html
+/docs/legacy-planar/REPORT.html
+*.stl
+*.mp4
+*.webm
+*.canopy-replay
+*.zip
+
+# dist/ is authored runtime source and MUST stay tracked.
+# third_party/source/*.tar.gz are intentional licensed source inputs.

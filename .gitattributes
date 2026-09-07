@@ -1,0 +1,16 @@
+* text=auto
+*.js text eol=lf
+*.mjs text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.yml text eol=lf
+*.command text eol=lf
+*.bat text eol=crlf
+*.png binary
+*.gz binary
+dist/vendor/** linguist-vendored=true
+tests/vendor/** linguist-vendored=true
+third_party/** linguist-vendored=true

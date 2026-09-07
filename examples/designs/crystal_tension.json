@@ -1,0 +1,60 @@
+{
+  "format": "canopy-studio",
+  "version": 2,
+  "design": {
+    "dimension": "3d",
+    "family": "honeycomb",
+    "columns": 1,
+    "rows": 1,
+    "slices": 1,
+    "width": 36,
+    "depth": 36,
+    "disorder": 0,
+    "hierarchy": 0,
+    "hierarchyScale": 0.46,
+    "radius": 0.65,
+    "fineRatio": 0.58,
+    "gradient": 0,
+    "gradientAxis": "y",
+    "anisotropy": 1,
+    "repeatsX": 1,
+    "repeatsY": 1,
+    "repeatsZ": 1,
+    "seed": 42,
+    "notch": false,
+    "notchDepth": 0.26,
+    "notchY": 0.5,
+    "notchZ": 1,
+    "interpretation": "Interconnected cellular pores carry the primary load. Smaller nested cells and branching bridges introduce secondary length scales. Order, anisotropy, and thickness gradients move the design from a regular lattice toward the organic, redundant networks in the reference.",
+    "height": 36.0
+  },
+  "material": {
+    "model": "linear",
+    "E": 1200,
+    "poisson": 0.35,
+    "yieldStress": 24,
+    "hardening": 0.03,
+    "strength": 48,
+    "fracture": false
+  },
+  "experiment": {
+    "mode": "tension",
+    "axis": "x",
+    "shearAxis": "x",
+    "target": 0.02,
+    "increment": 0.002,
+    "subdivisions": 2,
+    "tolerance": 0.0001,
+    "maxIterations": 140
+  },
+  "print": {
+    "profile": "round",
+    "thickening": 1,
+    "minDiameter": 0.8,
+    "outputWidth": 40,
+    "layers": 1,
+    "layerSpacing": 4,
+    "voxel": 0.28,
+    "deformed": false
+  }
+}
